@@ -19,4 +19,14 @@ class Simple_Server:
             self.handle_request(client_socket)
 
     def handle_request(self, client_socket):
-        pass
+        request_data = client_socket.recv(1024).decode("utf-8")
+
+        # Extract the requested file path from the HTTP request
+        req_file = request_data.split()[1]
+
+        # send a simle HTTP response
+        response: str = "HTTP/1.1 200 OK\n\nHello, World!"
+        client_socket.send(response.encode("utf-8"))
+
+        # close the client socket
+        client_socket.close()
